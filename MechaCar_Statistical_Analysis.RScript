@@ -1,0 +1,40 @@
+# Deliverable 1: Linear Regression to Predict MPG
+# Install and load packages
+library(dplyr)
+library(tidyverse)
+# Read csv file in and return into a DataFrame
+mechacar_df <- read.csv('resources/MechaCar_mpg.csv')
+head(mechacar_df)
+# Generate multiple linear regression model
+lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data = mechacar_df)
+# Generate summary statistics
+summary(lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data = mechacar_df))
+
+# Deliverable 2: Create Visualizations for the Trip Analysis
+# Read csv file in and return into a DataFrame
+suspcoil_df <- read.csv('resources/Suspension_Coil.csv')
+head(suspcoil_df)
+# Calculate statistics (mean, median, variance, std deviation of Susp Coil's PSI)
+Mean = mean(suspcoil_df$PSI)
+Median = median(suspcoil_df$PSI)
+Variance= var(suspcoil_df$PSI)
+SD = sd(suspcoil_df$PSI)
+
+# Calculate Total Summary Data Frame
+total_summary <- data.frame(Mean, Median, Variance, SD)
+# Summary by lot
+lot_summary <- suspcoil_df %>% group_by(Manufacturing_Lot) %>% summarize(Mean=mean(PSI), Median=median(PSI), Variance=var(PSI), SD=sd(PSI), .groups='keep')
+
+# Deliverable 3: T-Tests on Suspension Coils
+# First Test on 'all lots'
+t.test((suspcoil_df$PSI), mu=1500)
+
+# Second Test on 'each lot'
+t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot1")$PSI, mu=1500)
+t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot2")$PSI, mu=1500)
+t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot3")$PSI, mu=1500)
+
+
+
+
+
