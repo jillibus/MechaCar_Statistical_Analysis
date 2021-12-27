@@ -3,14 +3,13 @@
 ![logo](images/module-15_logo.png)
 
 ## Overview
-A few weeks after starting his new role, Jeremy is approached by upper management about a special project. AutosRUs’ newest prototype, the MechaCar, is suffering from production troubles that are blocking the manufacturing team’s progress. AutosRUs’ upper management has called on Jeremy and the data analytics team to review the production data for insights that may help the manufacturing team.
+The purpose of this project was to use the R programming language, for the AutosRU company.
 
-In this challenge, you’ll help Jeremy and the data analytics team do the following:
-
-Perform multiple linear regression analysis to identify which variables in the dataset predict the mpg of MechaCar prototypes
-Collect summary statistics on the pounds per square inch (PSI) of the suspension coils from the manufacturing lots
-Run t-tests to determine if the manufacturing lots are statistically different from the mean population
-Design a statistical study to compare vehicle performance of the MechaCar vehicles against vehicles from other manufacturers. For each statistical analysis, you’ll write a summary interpretation of the findings.
+- Perform multiple linear regression analysis to identify which variables in the dataset predict the mpg of MechaCar prototypes. 
+- Collect summary statistics on the pounds per square inch (PSI) of the suspension coils from the manufacturing lots
+- Run t-tests to determine if the manufacturing lots are statistically different from the mean population
+- Design a statistical study to compare vehicle performance of the MechaCar vehicles against vehicles from other manufacturers. 
+- For each statistical analysis, you’ll write a summary interpretation of the findings.
 
 ## Resources
 * Data Sources: MechaCar_mpg.csv, Suspension_Coil.csv
@@ -144,11 +143,25 @@ When looking at Deliverables 2 and 3, they both show, with Lot 3, that the lower
 
 ### Deliverable 4: Design a Study Comparing the MechaCar to the Competition
 
-To look at MechaCar vs Competors, the company should invest into an ANOVA test
+An addition analysis to compare MechaCar's new Compact SUV against the competition we will perform a new statistical study.  Our study design, we will use metrics we believe the consumer would be interested in and motivate them to buy the new MechaCar Compact SUV.
 
 Additional analysis that would be beneficial would be:
-  * The number of downtown gyms or buildings with gyms and changing rooms for commuters.
-  * The analysis of the different months throughout the year and temperatures to see how the number of rides differed.
+  * Horsepower
+  * Fuel Efficiency
+  * Number of People it can hold
+  * Price
+
+Vehicle Class:  compact SUV
+
+Hypothesis':
+NULL: There is NO statistical significant difference on defined metrics between MechaCar and the competition.
+NOT-NULL: There is statistical significant difference on defined metrics between MechaCar and the competition.
+
+The significance value defined for our study is **0.05**
+
+In order to perform the analysis, we are collecting _Horsepower, Fuel Efficiency, Number of people and Price_ data for all MechaCar competitors from Compact SUV vehicle class.  All the competitor data is grouped together for our analysis.
+
+We will perform t-tests on each metric for MechaCar against the same metric from the collective competition data. R has _apv()_ method to run the ANOVA test and then use R's _summary()_ function to retrieve the summary statistics.  If the p-value for each t-test is less than 0.05 then we will reject our NULL hypothesis.
 
 Thank you for your time, and let me know if you wish to see any additional data.
 
