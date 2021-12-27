@@ -3,11 +3,14 @@
 ![logo](images/module-15_logo.png)
 
 ## Overview
+A few weeks after starting his new role, Jeremy is approached by upper management about a special project. AutosRUs’ newest prototype, the MechaCar, is suffering from production troubles that are blocking the manufacturing team’s progress. AutosRUs’ upper management has called on Jeremy and the data analytics team to review the production data for insights that may help the manufacturing team.
 
-This project is to use Linear Regression to **predict the MPG (miles per gallon) for a vehicle**.
+In this challenge, you’ll help Jeremy and the data analytics team do the following:
 
-- The non-random Variance was based on the vehicles: _weight_, _spoiler angle_ and if the vehicle is equiped with _AWD (all wheel drive)_. 
-- The maximum random variance was provided by the vehicle's _ground_clearance_ and _vehicle_length_.
+Perform multiple linear regression analysis to identify which variables in the dataset predict the mpg of MechaCar prototypes
+Collect summary statistics on the pounds per square inch (PSI) of the suspension coils from the manufacturing lots
+Run t-tests to determine if the manufacturing lots are statistically different from the mean population
+Design a statistical study to compare vehicle performance of the MechaCar vehicles against vehicles from other manufacturers. For each statistical analysis, you’ll write a summary interpretation of the findings.
 
 ## Resources
 * Data Sources: MechaCar_mpg.csv, Suspension_Coil.csv
@@ -17,7 +20,9 @@ This project is to use Linear Regression to **predict the MPG (miles per gallon)
 <a href="https://jillibus.github.io/MechaCar_Statistical_Analysis/">MechaCar Statistical Analysis</a>
 
 ## RESULTS
-
+### Deliverable 1: Linear Regression to Predict MPG
+- The non-random Variance was based on the vehicles: _weight_, _spoiler angle_ and if the vehicle is equiped with _AWD (all wheel drive)_. 
+- The maximum random variance was provided by the vehicle's _ground_clearance_ and _vehicle_length_.
 - Since p-value ended up being less than zero (5.35e-11), the slope is not equal to zero.
 - The R squared value is 71.49%, which implies that roughly 72% of the time, the predictions will be correct using this linear model.
 
@@ -59,10 +64,8 @@ F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11
 
 ```
 
-## Looking at the Suspension Coils 
-As we did with the MechaCar_mpg.csv, we read in the Suspension_Coil.csv into a DataFrame. This made it very easy for us to calculate the statistics on the coils sorting out the PSI.
+### Deliverable 2: Summary Statistics on Suspension Coils
 
-Our first test was run against the Total DataFrame (data set) and the results were as follows:
 ```
 > # Calculate statistics (mean, median, variance, std deviation of Susp Coil's PSI)
 > Mean = mean(suspcoil_df$PSI)
@@ -71,23 +74,77 @@ Our first test was run against the Total DataFrame (data set) and the results we
 > SD = sd(suspcoil_df$PSI)
 > # Calculate Total Summary Data Frame
 > total_summary <- data.frame(Mean, Median, Variance, SD)
-```
-<img src="images/TotalSummary.png">
-
----
-
-Our second run was to separate the total_summary by the Lot#
-```
 > # Summary by lot
 > lot_summary <- suspcoil_df %>% group_by(Manufacturing_Lot) %>% summarize(Mean=mean(PSI), Median=median(PSI), Variance=var(PSI), SD=sd(PSI), .groups='keep')
 ```      
-<img src="images/LotSummary.png">
+<img src="images/TotalSummary.png">                       <img src="images/LotSummary.png">
 
----
+### Deliverable 3: T-Test on Suspension Coils
+```
+> # First Test on 'all lots'
+> t.test((suspcoil_df$PSI), mu=1500)
+
+	One Sample t-test
+
+data:  (suspcoil_df$PSI)
+t = -1.8931, df = 149, p-value = 0.06028
+alternative hypothesis: true mean is not equal to 1500
+95 percent confidence interval:
+ 1497.507 1500.053
+sample estimates:
+mean of x 
+  1498.78 
+
+> # Second Test on 'each lot'
+> t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot1")$PSI, mu=1500)
+
+	One Sample t-test
+
+data:  subset(suspcoil_df, Manufacturing_Lot == "Lot1")$PSI
+t = 0, df = 49, p-value = 1
+alternative hypothesis: true mean is not equal to 1500
+95 percent confidence interval:
+ 1499.719 1500.281
+sample estimates:
+mean of x 
+     1500 
+
+> t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot2")$PSI, mu=1500)
+
+	One Sample t-test
+
+data:  subset(suspcoil_df, Manufacturing_Lot == "Lot2")$PSI
+t = 0.51745, df = 49, p-value = 0.6072
+alternative hypothesis: true mean is not equal to 1500
+95 percent confidence interval:
+ 1499.423 1500.977
+sample estimates:
+mean of x 
+   1500.2 
+
+> t.test(subset(suspcoil_df, Manufacturing_Lot == "Lot3")$PSI, mu=1500)
+
+	One Sample t-test
+
+data:  subset(suspcoil_df, Manufacturing_Lot == "Lot3")$PSI
+t = -2.0916, df = 49, p-value = 0.04168
+alternative hypothesis: true mean is not equal to 1500
+95 percent confidence interval:
+ 1492.431 1499.849
+sample estimates:
+mean of x 
+  1496.14 
+```
 
 ## Summary
 
-The data shows high activity of The CityBike bike-sharing service in the New York Manhattan downtown area.  This area is a high traffic, business as well as tourist area, that is difficult to find parking as well as known for heavy traffic and expensive parking lots.  The data shows that early morning and afternoon business workers are using the CityBike ride-sharing as an alternative to other forms of Public Transportation to arrive and depart from their place of business.  With trends of a more casual workplace, in which Female workers would be able to wear pants and/or pantsuits, and more access to a changing facility, I can forsee an increase of additional female workers joining this form of Public Transportation.
+When looking at Deliverable 1, the major impacts on MPG are car weight, spoiler angle and AWD collectivly. This means the designers at MechaCar have to pay close attention to all three when making adjustments as all 3 impact the MPG, so just focusing on one without the other 2 may not improve the MPG and could increase it by making the other 2 worse.
+
+When looking at Deliverables 2 and 3, they both show, with Lot 3, that the lower suspension coil PSI's, these have the biggest variance and fall outside of the range of coils that MechaCar should be using.  I would recommend to MechaCar that the suspension coils in Lot 3 be removed from their list of coils to choose from.
+
+### Deliverable 4: Design a Study Comparing the MechaCar to the Competition
+
+To look at MechaCar vs Competors, the company should invest into an ANOVA test
 
 Additional analysis that would be beneficial would be:
   * The number of downtown gyms or buildings with gyms and changing rooms for commuters.
